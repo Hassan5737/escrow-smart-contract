@@ -1,0 +1,22 @@
+# Foundry build artifacts
+out/
+cache/
+broadcast/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Test coverage
+coverage/
+lcov.info
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+*.swp
+*.swo
