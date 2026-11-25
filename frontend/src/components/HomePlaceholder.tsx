@@ -18,7 +18,6 @@ export function HomePlaceholder() {
   return (
     <section className="home">
       <div className="home-copy">
-        <p className="eyebrow">Phase 01 / Shell</p>
         <h1 className="display">
           Three keys.
           <br />
@@ -48,6 +47,7 @@ export function HomePlaceholder() {
 
       <div className="home-visual">
         <VaultGlyph
+          amount={10n ** 18n}
           buyerApproved={false}
           sellerApproved={false}
           disputed={false}

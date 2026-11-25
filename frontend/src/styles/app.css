@@ -35,7 +35,7 @@ main {
   padding: 22px 32px 28px;
   border-top: 1px solid var(--line);
   color: var(--sage-dim);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.04em;
 }
 
@@ -74,14 +74,14 @@ main {
 
 .brand-sub {
   color: var(--sage-dim);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .nav-link {
   color: var(--sage);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.04em;
   transition: color 300ms var(--ease);
 }
@@ -99,7 +99,7 @@ main {
   color: var(--ink);
   border-radius: 2px;
   padding: 10px 16px;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.02em;
   transition:
     border-color 400ms var(--ease),
@@ -129,7 +129,7 @@ main {
 
 .button--small {
   padding: 8px 13px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* Wallet */
@@ -154,7 +154,7 @@ main {
 
 .wallet-chain {
   color: var(--sage-dim);
-  font-size: 11px;
+  font-size: 12px;
   border-left: 1px solid var(--line);
   padding-left: 9px;
 }
@@ -177,7 +177,7 @@ main {
   padding: 9px 10px;
   border: 0;
   background: transparent;
-  font-size: 13px;
+  font-size: 14px;
   transition: background-color 300ms var(--ease);
 }
 
@@ -192,7 +192,7 @@ main {
 .wallet-menu-note {
   padding: 0 10px 6px;
   color: var(--sage-dim);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* Modal */
@@ -241,12 +241,12 @@ main {
 .modal-note,
 .modal-foot {
   color: var(--sage-dim);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .modal-note {
   margin: 14px 0 22px;
-  max-width: 32ch;
+  max-width: 34ch;
 }
 
 .modal-foot {
@@ -277,7 +277,7 @@ main {
 
 .wallet-option:hover:not(:disabled) {
   border-color: var(--brass);
-  background: rgba(198, 161, 92, 0.05);
+  background: rgba(212, 173, 106, 0.05);
 }
 
 .wallet-option:disabled {
@@ -307,14 +307,14 @@ main {
 
 .wallet-option-state {
   color: var(--sage-dim);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .modal-empty,
 .modal-error {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .modal-empty {
@@ -339,18 +339,18 @@ main {
   margin: 0 auto;
   padding: 14px 32px;
   border-bottom: 1px solid var(--terracotta-dim);
-  background: rgba(180, 106, 79, 0.07);
+  background: rgba(200, 125, 96, 0.07);
 }
 
 .network-guard-title {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .network-guard-detail,
 .network-guard-error {
   margin-top: 2px;
   color: var(--sage-dim);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .network-guard-error {
@@ -368,7 +368,7 @@ main {
 
 .eyebrow {
   color: var(--sage-dim);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -389,7 +389,7 @@ main {
 .lede {
   max-width: 44ch;
   color: var(--ink-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .meta-list {
@@ -402,21 +402,21 @@ main {
 
 .meta-list dt {
   color: var(--sage-dim);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .meta-list dd {
   margin: 4px 0 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .text-link {
   display: inline-block;
   margin-top: 24px;
   color: var(--brass);
-  font-size: 13px;
+  font-size: 14px;
   border-bottom: 1px solid var(--terracotta-dim);
   padding-bottom: 2px;
 }
@@ -444,7 +444,7 @@ main {
   flex: none;
   width: 7px;
   height: 7px;
-  margin-top: 8px;
+  margin-top: 9px;
   border: 1px solid var(--sage);
   border-radius: 50%;
 }
@@ -456,7 +456,7 @@ main {
 
 .status-line--disputed .status-mark {
   border-color: var(--terracotta);
-  background: rgba(180, 106, 79, 0.25);
+  background: rgba(200, 125, 96, 0.25);
 }
 
 .status-line--releasedToSeller .status-mark,
@@ -468,14 +468,14 @@ main {
 
 .status-title {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1.2;
 }
 
 .status-detail {
   margin-top: 4px;
   color: var(--sage);
-  font-size: 13px;
+  font-size: 14px;
   max-width: 46ch;
 }
 
@@ -483,7 +483,7 @@ main {
   display: inline-block;
   margin-top: 12px;
   color: var(--brass);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.02em;
   border-bottom: 1px solid var(--terracotta-dim);
   padding-bottom: 2px;
@@ -548,11 +548,19 @@ main {
   stroke-width: 1;
 }
 
-.vault-core-label {
+.vault-amount {
+  fill: var(--ink);
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.vault-unit {
   fill: var(--sage);
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
+  font-size: 7px;
+  letter-spacing: 0.18em;
 }
 
 .vault-node circle:first-child {
@@ -586,6 +594,14 @@ main {
 
 .vault--settled .vault-node-dot {
   fill: var(--sage-dim);
+}
+
+.vault-node-label {
+  fill: var(--ink);
+  opacity: 0.68;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.12em;
 }
 
 .vault.is-static *,
@@ -647,7 +663,7 @@ main {
 
 .lab-label {
   color: var(--sage-dim);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
