@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
+import { ActionPanel } from '../components/ActionPanel'
 import { AddressField } from '../components/AddressField'
 import { EscrowSummary } from '../components/EscrowSummary'
 import { RecentList } from '../components/RecentList'
@@ -9,6 +10,7 @@ import { VaultGlyph } from '../components/VaultGlyph'
 import { chainLabel } from '../lib/chains'
 import { targetChain } from '../config/wagmi'
 import { escrowContractAddress } from '../contracts/escrow'
+import { listActions } from '../lib/actions'
 import { useEscrow } from '../hooks/useEscrow'
 import { useEscrowStatus } from '../hooks/useEscrowStatus'
 import { useRecent } from '../hooks/useRecent'
@@ -24,6 +26,11 @@ export function HomePage() {
   const escrow = useEscrow(address)
   const role = useRole(escrow.read)
   const status = useEscrowStatus(escrow.snapshot)
+
+  const actions = useMemo(
+    () => (escrow.snapshot ? listActions(escrow.snapshot, role.roles, isConnected) : []),
+    [escrow.snapshot, role.roles, isConnected],
+  )
 
   const explorerHref = useMemo(() => {
     if (!status || !needsInternalTxLink(status.kind)) return undefined
@@ -98,6 +105,11 @@ export function HomePage() {
               connected={isConnected}
               chainId={targetChain.id}
               blockNumber={escrow.blockNumber}
+            />
+            <ActionPanel
+              address={address}
+              actions={actions}
+              onConfirmed={() => void escrow.refetch()}
             />
             <div className="read-actions">
               <button

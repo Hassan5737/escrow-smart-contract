@@ -1,8 +1,16 @@
-import { formatEther, type Address } from 'viem'
+import { formatEther, type Address, type Hex } from 'viem'
 
 export function truncateAddress(address: Address, lead = 6, tail = 4): string {
-  if (address.length <= lead + tail + 1) return address
-  return `${address.slice(0, lead)}…${address.slice(-tail)}`
+  return truncateHex(address, lead, tail)
+}
+
+export function truncateHash(hash: Hex, lead = 10, tail = 8): string {
+  return truncateHex(hash, lead, tail)
+}
+
+function truncateHex(value: Hex, lead: number, tail: number): string {
+  if (value.length <= lead + tail + 1) return value
+  return `${value.slice(0, lead)}…${value.slice(-tail)}`
 }
 
 export function formatEth(value: bigint, maxFractionDigits = 4): string {

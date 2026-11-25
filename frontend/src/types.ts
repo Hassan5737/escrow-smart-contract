@@ -15,6 +15,20 @@ export type EscrowStatusKind =
   | 'resolvedByArbiter'
   | 'settledUnknown'
 
+export type EscrowAction =
+  | 'approveBuyer'
+  | 'approveSeller'
+  | 'raiseDispute'
+  | 'paySeller'
+  | 'refundBuyer'
+
+export interface ActionState {
+  kind: EscrowAction
+  label: string
+  enabled: boolean
+  reason: string | null
+}
+
 export interface EscrowSnapshot {
   amount: bigint
   balance: bigint
