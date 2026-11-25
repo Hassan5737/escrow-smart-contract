@@ -1,5 +1,5 @@
-import { formatEther } from 'viem'
 import { useCountUp } from '../hooks/useCountUp'
+import { formatEth } from '../lib/format'
 
 interface VaultGlyphProps {
   amount?: bigint
@@ -36,9 +36,8 @@ export function VaultGlyph({
   animate = true,
 }: VaultGlyphProps) {
   const theme = disputed ? 'dispute' : settled ? 'settled' : 'live'
-  const ethValue = amount === undefined ? undefined : Number(formatEther(amount))
-  const counted = useCountUp(ethValue ?? 0, 900)
-  const amountText = ethValue === undefined ? '—' : counted.toFixed(3)
+  const counted = useCountUp(amount ?? 0n, 900)
+  const amountText = amount === undefined ? '—' : formatEth(counted)
 
   const stateLabel = settled
     ? 'vault settled'

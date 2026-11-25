@@ -144,6 +144,7 @@ export function useEscrow(address: Address | undefined) {
     read,
     snapshot,
     balance: balance.data?.value,
+    blockNumber: blockNumber.data,
     isError: reads.isError || balance.isError || code.isError,
     errorMessage: error?.message ?? null,
     refetch,

@@ -575,6 +575,11 @@ main {
   border-bottom: 1px solid var(--line);
 }
 
+.participant-row--holder {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .participant-role {
   min-width: 72px;
   color: var(--sage-dim);
@@ -583,6 +588,24 @@ main {
 
 .participant-row .detail-value--mono {
   flex: 1;
+}
+
+.participant-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.participant-actions .status-link {
+  margin-top: 0;
+  font-size: 14px;
+}
+
+.participant-note {
+  color: var(--sage-dim);
+  font-size: 13px;
 }
 
 .you-tag {
@@ -1011,6 +1034,10 @@ main {
   .read-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
+  }
+
+  .participant-actions {
+    margin-left: 0;
   }
 
   .network-guard {

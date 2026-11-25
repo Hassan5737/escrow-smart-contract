@@ -40,11 +40,10 @@ export function HomePage() {
   return (
     <section className="read-view">
       <div className="read-copy">
-        <p className="eyebrow">Read-only view</p>
+        <p className="eyebrow">Vault inspector</p>
         <h1 className="display display--small">Inspect the vault.</h1>
         <p className="lede">
-          Enter an escrow address to read its state. This phase derives meaning from contract
-          data and sends no transactions.
+          Enter an escrow address to read its state and act when your role allows.
         </p>
 
         <AddressField address={address} onSubmit={selectAddress} />
@@ -97,6 +96,8 @@ export function HomePage() {
               roleList={role.list}
               roles={role.roles}
               connected={isConnected}
+              chainId={targetChain.id}
+              blockNumber={escrow.blockNumber}
             />
             <div className="read-actions">
               <button
@@ -108,9 +109,6 @@ export function HomePage() {
               </button>
               <span className="read-note">Updates on every new block.</span>
             </div>
-            <p className="read-note read-note--quiet">
-              Approval, dispute and resolution controls belong to a later phase.
-            </p>
           </div>
         )}
       </div>

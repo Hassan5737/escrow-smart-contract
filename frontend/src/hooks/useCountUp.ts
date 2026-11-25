@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 
-export function useCountUp(value: number, duration = 900): number {
+const SCALE = 10_000n
+
+export function useCountUp(value: bigint, duration = 900): bigint {
   const reducedMotion = useReducedMotion()
-  const [display, setDisplay] = useState(reducedMotion ? value : 0)
+  const [display, setDisplay] = useState<bigint>(reducedMotion ? value : 0n)
 
   useEffect(() => {
     if (reducedMotion || duration <= 0) {
@@ -17,7 +19,8 @@ export function useCountUp(value: number, duration = 900): number {
     function tick(now: number) {
       const progress = Math.min((now - startedAt) / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
-      setDisplay(value * eased)
+      const scaled = BigInt(Math.round(eased * 10_000))
+      setDisplay((value * scaled) / SCALE)
       if (progress < 1) frame = requestAnimationFrame(tick)
     }
 
