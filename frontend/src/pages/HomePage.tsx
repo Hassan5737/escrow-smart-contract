@@ -134,6 +134,7 @@ export function HomePage() {
               sellerApproved={snapshot.sellerApproved}
               disputed={snapshot.isDisputeRaised}
               settled={isSettled(snapshot)}
+              statusKind={status.kind}
             />
             <StatusLine status={status} explorerHref={explorerHref} />
           </>

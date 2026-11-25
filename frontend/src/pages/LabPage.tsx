@@ -77,6 +77,7 @@ export function LabPage() {
                   sellerApproved={scenarioItem.snapshot.sellerApproved}
                   disputed={scenarioItem.snapshot.isDisputeRaised}
                   settled={isSettled(scenarioItem.snapshot)}
+                  statusKind={status.kind}
                 />
               </div>
             </motion.article>

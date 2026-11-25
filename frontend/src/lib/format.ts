@@ -20,3 +20,13 @@ export function formatEth(value: bigint, maxFractionDigits = 4): string {
   const trimmed = fraction.slice(0, maxFractionDigits).replace(/0+$/, '')
   return trimmed.length === 0 ? whole : `${whole}.${trimmed}`
 }
+
+export function formatVaultAmount(value: bigint): string {
+  const standard = formatEth(value, 4)
+  if (standard !== '0') return standard
+  return formatEth(value, 6)
+}
+
+export function fullEthAmount(value: bigint): string {
+  return formatEth(value, 18)
+}

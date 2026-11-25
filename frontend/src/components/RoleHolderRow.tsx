@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { Address } from 'viem'
 import { addressUrl } from '../lib/explorer'
 import { truncateAddress } from '../lib/format'
-
-type CopyState = 'idle' | 'copied' | 'failed'
+import { useCopy } from '../hooks/useCopy'
+import { IconButton } from './IconButton'
+import { CheckIcon, CollapseIcon, CopyIcon, ExpandIcon } from './icons'
 
 interface RoleHolderRowProps {
   label: string
@@ -14,13 +15,7 @@ interface RoleHolderRowProps {
 
 export function RoleHolderRow({ label, address, chainId, isYou }: RoleHolderRowProps) {
   const [expanded, setExpanded] = useState(false)
-  const [copyState, setCopyState] = useState<CopyState>('idle')
-
-  useEffect(() => {
-    if (copyState === 'idle') return
-    const timer = window.setTimeout(() => setCopyState('idle'), 1400)
-    return () => window.clearTimeout(timer)
-  }, [copyState])
+  const { copied, failed, copy } = useCopy()
 
   if (!address) {
     return (
@@ -32,41 +27,34 @@ export function RoleHolderRow({ label, address, chainId, isYou }: RoleHolderRowP
   }
 
   const href = addressUrl(address, chainId)
+  const display = expanded ? address : truncateAddress(address, 10, 8)
+  const copyLabel = copied ? 'Address copied' : failed ? 'Copy failed' : 'Copy address'
 
-  async function copyAddress() {
-    try {
-      await navigator.clipboard.writeText(address as Address)
-      setCopyState('copied')
-    } catch {
-      setCopyState('failed')
-    }
-  }
+  const addressNode = href ? (
+    <a className="participant-address detail-value--mono" href={href} target="_blank" rel="noreferrer" title={address}>
+      {display}
+    </a>
+  ) : (
+    <span className="participant-address detail-value--mono" title={address}>
+      {display}
+    </span>
+  )
 
   return (
     <div className="participant-row participant-row--holder">
       <span className="participant-role">{label}</span>
-      <span className="detail-value--mono" title={address}>
-        {expanded ? address : truncateAddress(address, 8, 6)}
-      </span>
+      {addressNode}
       {isYou && <span className="you-tag">you</span>}
       <div className="participant-actions">
-        <button
-          type="button"
-          className="button button--small"
+        <IconButton label={copyLabel} onClick={() => void copy(address)} success={copied}>
+          {copied ? <CheckIcon /> : <CopyIcon />}
+        </IconButton>
+        <IconButton
+          label={expanded ? 'Collapse address' : 'Expand address'}
           onClick={() => setExpanded((value) => !value)}
         >
-          {expanded ? 'Collapse' : 'Expand'}
-        </button>
-        <button type="button" className="button button--small" onClick={() => void copyAddress()}>
-          {copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy'}
-        </button>
-        {href ? (
-          <a className="status-link" href={href} target="_blank" rel="noreferrer">
-            Explorer <span aria-hidden="true">↗</span>
-          </a>
-        ) : (
-          <span className="participant-note">No explorer on this network</span>
-        )}
+          {expanded ? <CollapseIcon /> : <ExpandIcon />}
+        </IconButton>
       </div>
     </div>
   )

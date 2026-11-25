@@ -132,6 +132,30 @@ main {
   font-size: 14px;
 }
 
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--sage);
+  transition:
+    border-color 300ms var(--ease),
+    color 300ms var(--ease);
+}
+
+.icon-button:hover {
+  border-color: var(--brass);
+  color: var(--ink);
+}
+
+.icon-button--success {
+  border-color: var(--brass-dim, var(--brass));
+  color: var(--brass);
+}
+
 /* Wallet */
 
 .wallet-wrap {
@@ -577,43 +601,48 @@ main {
 
 .participant-row--holder {
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .participant-role {
-  min-width: 72px;
+  flex: none;
+  width: 72px;
   color: var(--sage-dim);
   font-size: 14px;
+}
+
+.participant-address {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  color: var(--ink);
+}
+
+.participant-address::-webkit-scrollbar {
+  display: none;
 }
 
 .participant-row .detail-value--mono {
-  flex: 1;
-}
-
-.participant-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-left: auto;
-}
-
-.participant-actions .status-link {
   margin-top: 0;
-  font-size: 14px;
-}
-
-.participant-note {
-  color: var(--sage-dim);
-  font-size: 13px;
 }
 
 .you-tag {
+  flex: none;
   color: var(--brass);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.participant-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
 }
 
 .read-visual {
@@ -834,11 +863,21 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
+.vault-amount.is-paid {
+  fill: var(--sage-dim);
+}
+
 .vault-unit {
   fill: var(--sage);
   font-family: var(--font-mono);
   font-size: 7px;
   letter-spacing: 0.18em;
+}
+
+.vault-unit.is-paid {
+  fill: var(--sage-dim);
+  font-size: 6px;
+  letter-spacing: 0.14em;
 }
 
 .vault-node circle:first-child {
@@ -865,6 +904,9 @@ main {
 
 .vault--dispute .vault-node--arbiter circle:first-child {
   stroke: var(--terracotta);
+}
+
+.vault--dispute.is-breathing .vault-node--arbiter circle:first-child {
   transform-box: fill-box;
   transform-origin: center;
   animation: arbiter-breathe 2800ms var(--ease-slow) infinite;
@@ -880,13 +922,6 @@ main {
   font-family: var(--font-mono);
   font-size: 7px;
   letter-spacing: 0.12em;
-}
-
-.vault.is-static *,
-.vault.is-static *::before,
-.vault.is-static *::after {
-  animation: none !important;
-  transition: none !important;
 }
 
 @keyframes arbiter-breathe {
@@ -1108,13 +1143,20 @@ main {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px 14px;
+  gap: 8px 10px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--line);
 }
 
+.tx-hash-value {
+  white-space: nowrap;
+}
+
 .tx-hash .status-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   margin-top: 0;
 }
 

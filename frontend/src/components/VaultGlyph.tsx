@@ -1,5 +1,6 @@
 import { useCountUp } from '../hooks/useCountUp'
-import { formatEth } from '../lib/format'
+import { formatVaultAmount, fullEthAmount } from '../lib/format'
+import type { EscrowStatusKind } from '../types'
 
 interface VaultGlyphProps {
   amount?: bigint
@@ -7,6 +8,7 @@ interface VaultGlyphProps {
   sellerApproved: boolean
   disputed: boolean
   settled: boolean
+  statusKind?: EscrowStatusKind
   animate?: boolean
 }
 
@@ -27,20 +29,32 @@ const arbiterNode = nodePosition(-90)
 const buyerNode = nodePosition(150)
 const sellerNode = nodePosition(30)
 
+function amountStyle(text: string) {
+  const size = text.length <= 4 ? 19 : text.length <= 6 ? 17 : text.length <= 8 ? 13 : text.length <= 10 ? 11 : 9
+  const estimatedWidth = text.length * size * 0.55
+  return { size, textLength: estimatedWidth > 52 ? 52 : undefined }
+}
+
 export function VaultGlyph({
   amount,
   buyerApproved,
   sellerApproved,
   disputed,
   settled,
+  statusKind,
   animate = true,
 }: VaultGlyphProps) {
   const theme = disputed ? 'dispute' : settled ? 'settled' : 'live'
+  const breathing = disputed && !settled && animate
   const counted = useCountUp(amount ?? 0n, 900)
-  const amountText = amount === undefined ? '—' : formatEth(counted)
+  const exactText = amount === undefined ? '—' : `${fullEthAmount(amount)} ETH`
+  const displayText = amount === undefined ? '—' : formatVaultAmount(counted)
+  const { size, textLength } = amountStyle(displayText)
+  const payoutCaption = statusKind === 'releasedToSeller' ? 'released' : 'paid out'
+  const caption = settled ? payoutCaption : 'ETH'
 
   const stateLabel = settled
-    ? 'vault settled'
+    ? `vault settled, ${payoutCaption}`
     : disputed
       ? 'vault in dispute'
       : buyerApproved && sellerApproved
@@ -53,10 +67,10 @@ export function VaultGlyph({
 
   return (
     <svg
-      className={`vault vault--${theme}${animate ? '' : ' is-static'}`}
+      className={`vault vault--${theme}${breathing ? ' is-breathing' : ''}`}
       viewBox="0 0 200 200"
       role="img"
-      aria-label={`${amountText === '—' ? 'Amount unknown' : `${amountText} ether`}, ${stateLabel}`}
+      aria-label={`${exactText}, ${stateLabel}`}
     >
       <circle className="vault-track" cx={CENTER} cy={CENTER} r={RADIUS} />
 
@@ -89,11 +103,25 @@ export function VaultGlyph({
 
       <circle className="vault-core-ring" cx={CENTER} cy={CENTER} r="35" />
       <circle className="vault-core" cx={CENTER} cy={CENTER} r="29" />
-      <text className="vault-amount" x={CENTER} y={CENTER + 2} textAnchor="middle">
-        {amountText}
+      <text
+        className={`vault-amount${settled ? ' is-paid' : ''}`}
+        x={CENTER}
+        y={CENTER + 2}
+        textAnchor="middle"
+        style={{ fontSize: size }}
+        textLength={textLength}
+        lengthAdjust="spacingAndGlyphs"
+      >
+        <title>{exactText}</title>
+        {displayText}
       </text>
-      <text className="vault-unit" x={CENTER} y={CENTER + 15} textAnchor="middle">
-        ETH
+      <text
+        className={`vault-unit${settled ? ' is-paid' : ''}`}
+        x={CENTER}
+        y={CENTER + 15}
+        textAnchor="middle"
+      >
+        {caption}
       </text>
 
       <g className="vault-node vault-node--arbiter">
