@@ -1,0 +1,30 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #0b1210;
+  --bg-deep: #070b0a;
+  --surface: #101816;
+  --surface-raised: #141e1b;
+
+  --ink: #ece6d8;
+  --ink-soft: #cfc8b8;
+  --sage: #95a396;
+  --sage-dim: #647467;
+
+  --brass: #c6a15c;
+  --brass-bright: #d9b977;
+  --terracotta: #b46a4f;
+  --terracotta-dim: #7a4737;
+
+  --line: rgba(236, 230, 216, 0.12);
+  --line-strong: rgba(236, 230, 216, 0.22);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-ui: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --page-max: 1180px;
+}
