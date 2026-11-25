@@ -19,6 +19,9 @@ export function SiteHeader() {
       </Link>
 
       <nav className="site-nav" aria-label="Main">
+        <Link className="nav-link" to="/create">
+          Create
+        </Link>
         {env.enableLab && (
           <Link className="nav-link" to="/lab">
             Lab

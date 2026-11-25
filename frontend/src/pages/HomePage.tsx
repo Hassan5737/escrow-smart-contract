@@ -1,16 +1,20 @@
-import { useMemo, useState } from 'react'
-import type { Address } from 'viem'
+import { useEffect, useMemo, useState } from 'react'
+import { getAddress, isAddress, type Address } from 'viem'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 import { ActionPanel } from '../components/ActionPanel'
 import { AddressField } from '../components/AddressField'
 import { EscrowSummary } from '../components/EscrowSummary'
+import { IconButton } from '../components/IconButton'
 import { RecentList } from '../components/RecentList'
 import { StatusLine } from '../components/StatusLine'
 import { VaultGlyph } from '../components/VaultGlyph'
+import { CheckIcon, CopyIcon } from '../components/icons'
 import { chainLabel } from '../lib/chains'
 import { targetChain } from '../config/wagmi'
 import { escrowContractAddress } from '../contracts/escrow'
 import { listActions } from '../lib/actions'
+import { useCopy } from '../hooks/useCopy'
 import { useEscrow } from '../hooks/useEscrow'
 import { useEscrowStatus } from '../hooks/useEscrowStatus'
 import { useRecent } from '../hooks/useRecent'
@@ -19,9 +23,26 @@ import { internalTxUrl } from '../lib/explorer'
 import { isSettled, needsInternalTxLink } from '../lib/status'
 
 export function HomePage() {
-  const [address, setAddress] = useState<Address>(escrowContractAddress)
+  const { address: routeParam } = useParams<{ address: string }>()
+  const navigate = useNavigate()
+  const location = useLocation()
   const { recent, remember, clear } = useRecent()
   const { isConnected } = useAccount()
+  const { copied, copy } = useCopy()
+
+  const route = useMemo(() => {
+    if (routeParam === undefined) return { address: escrowContractAddress, invalid: false }
+    if (!isAddress(routeParam, { strict: false })) {
+      return { address: escrowContractAddress, invalid: true }
+    }
+    return { address: getAddress(routeParam), invalid: false }
+  }, [routeParam])
+
+  const [address, setAddress] = useState<Address>(route.address)
+
+  useEffect(() => {
+    setAddress(route.address)
+  }, [route.address])
 
   const escrow = useEscrow(address)
   const role = useRole(escrow.read)
@@ -37,9 +58,13 @@ export function HomePage() {
     return internalTxUrl(address, targetChain.id)
   }, [status, address])
 
+  const shareUrl = `${window.location.origin}/escrow/${address}`
+  const justCreated = (location.state as { created?: boolean } | null)?.created === true
+
   function selectAddress(next: Address) {
     setAddress(next)
     remember(next)
+    navigate(`/escrow/${next}`)
   }
 
   const { read, snapshot } = escrow
@@ -52,11 +77,24 @@ export function HomePage() {
         <p className="lede">
           Enter an escrow address to read its state and act when your role allows.
         </p>
+        <div className="read-actions hero-actions">
+          <Link className="button button--brass button--small" to="/create">
+            Create a vault
+          </Link>
+          <span className="read-note">Deploy a fresh escrow from your wallet.</span>
+        </div>
 
         <AddressField address={address} onSubmit={selectAddress} />
         <RecentList items={recent} active={address} onSelect={selectAddress} onClear={clear} />
 
-        {!escrow.ready ? (
+        {route.invalid ? (
+          <div className="read-state" role="alert">
+            <p className="read-state-title">Invalid escrow link</p>
+            <p className="read-note">
+              The address in this link is not a valid Ethereum address. Enter one above to continue.
+            </p>
+          </div>
+        ) : !escrow.ready ? (
           <div className="read-state">
             <p className="read-state-title">Public RPC unavailable</p>
             <p className="read-note">
@@ -97,6 +135,24 @@ export function HomePage() {
           </div>
         ) : (
           <div className="read-result">
+            {justCreated && (
+              <p className="create-success" role="status">
+                Escrow created and verified on chain.
+              </p>
+            )}
+            <div className="share-row">
+              <span className="detail-label">Share this vault</span>
+              <span className="share-url mono" title={shareUrl}>
+                {shareUrl}
+              </span>
+              <IconButton
+                label={copied ? 'Link copied' : 'Copy shareable link'}
+                onClick={() => void copy(shareUrl)}
+                success={copied}
+              >
+                {copied ? <CheckIcon /> : <CopyIcon />}
+              </IconButton>
+            </div>
             <EscrowSummary
               read={read}
               balance={escrow.balance}

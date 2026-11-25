@@ -6,6 +6,7 @@ import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 import { config, queryClient } from './config/wagmi'
 import { env } from './config/env'
+import { CreatePage } from './pages/CreatePage'
 import { HomePage } from './pages/HomePage'
 import { LabPage } from './pages/LabPage'
 
@@ -20,6 +21,8 @@ export default function App() {
             <main>
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/create" element={<CreatePage />} />
+                <Route path="/escrow/:address" element={<HomePage />} />
                 {env.enableLab && <Route path="/lab" element={<LabPage />} />}
                 <Route path="*" element={<HomePage />} />
               </Routes>

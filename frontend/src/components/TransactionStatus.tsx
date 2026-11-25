@@ -12,11 +12,11 @@ interface TransactionStatusProps {
   hash: Hash | undefined
   error: string | null
   actionLabel: string
-  chainId?: number
-  confirmedDetail?: string
-  hashLabel?: string
-  onRetry?: () => void
-  onDismiss?: () => void
+  chainId?: number | undefined
+  confirmedDetail?: string | undefined
+  hashLabel?: string | undefined
+  onRetry?: (() => void) | undefined
+  onDismiss?: (() => void) | undefined
 }
 
 const phaseCopy: Record<TxPhase, { title: string; detail: string }> = {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { isAddress, type Address } from 'viem'
 
 const STORAGE_KEY = 'escrow.recent.v1'
@@ -20,21 +20,34 @@ function readRecent(): Address[] {
 
 export function useRecent() {
   const [recent, setRecent] = useState<Address[]>(readRecent)
+  const latest = useRef(recent)
 
   useEffect(() => {
+    latest.current = recent
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(recent))
     } catch {}
   }, [recent])
 
   const remember = useCallback((address: Address) => {
-    setRecent((current) => [
+    const next = [
       address,
-      ...current.filter((item) => item.toLowerCase() !== address.toLowerCase()),
-    ].slice(0, MAX_ITEMS))
+      ...latest.current.filter((item) => item.toLowerCase() !== address.toLowerCase()),
+    ].slice(0, MAX_ITEMS)
+    latest.current = next
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+    } catch {}
+    setRecent(next)
   }, [])
 
-  const clear = useCallback(() => setRecent([]), [])
+  const clear = useCallback(() => {
+    latest.current = []
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([]))
+    } catch {}
+    setRecent([])
+  }, [])
 
   return { recent, remember, clear }
 }
