@@ -22,14 +22,26 @@
 
 </div>
 
-<!--
-Screenshots: add images to docs/images/ and uncomment.
+
+## Application Preview
 
 <p align="center">
-  <img src="docs/images/home.png" alt="Home" width="48%">
-  <img src="docs/images/vault-disputed.png" alt="Disputed vault" width="48%">
+  <img src="docs/images/home.png" alt="Three Key Vault dashboard showing the escrow state" width="90%">
 </p>
--->
+
+<p align="center">
+  <em>Inspect an escrow, view its balance, participants and current state.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/create-escrow.png" alt="Create a new Ethereum escrow" width="48%">
+  <img src="docs/images/vault-actions.png" alt="Role-based escrow actions" width="48%">
+</p>
+
+<p align="center">
+  <em>Create a new escrow and interact with the vault according to your role.</em>
+</p>
+
 
 ## Overview
 
