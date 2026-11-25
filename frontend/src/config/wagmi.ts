@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query'
 import { defineChain, type Chain } from 'viem'
-import { createConfig, http } from 'wagmi'
+import { createConfig, fallback, http, type Transport } from 'wagmi'
 import { sepolia } from 'wagmi/chains'
 import { injected, walletConnect } from 'wagmi/connectors'
 import { env } from './env'
@@ -23,8 +23,20 @@ const chains: readonly [Chain, ...Chain[]] = env.enableLocal
   ? [sepolia, anvil]
   : [sepolia]
 
-const transports: Record<number, ReturnType<typeof http>> = {
-  [sepolia.id]: http(env.sepoliaRpcUrl),
+// Public endpoints used when no private RPC URL is configured. They are
+// rate-limited and can change; set VITE_SEPOLIA_RPC_URL in production.
+export const publicSepoliaRpcUrls: readonly string[] = [
+  'https://ethereum-sepolia-rpc.publicnode.com',
+  'https://sepolia.gateway.tenderly.co',
+  'https://rpc.sepolia.ethpandaops.io',
+]
+
+const sepoliaTransport: Transport = env.sepoliaRpcUrl
+  ? http(env.sepoliaRpcUrl)
+  : fallback(publicSepoliaRpcUrls.map((url) => http(url)))
+
+const transports: Record<number, Transport> = {
+  [sepolia.id]: sepoliaTransport,
 }
 if (env.enableLocal) {
   transports[anvil.id] = http(anvil.rpcUrls.default.http[0] ?? 'http://127.0.0.1:8545')

@@ -8,10 +8,14 @@ function resolveAddress(value: string): Address {
   return isAddress(value, { strict: false }) ? getAddress(value) : FALLBACK_ADDRESS
 }
 
+// Production builds are Sepolia-only: local Anvil and the Lab cannot be
+// switched on with a build-time variable once a production bundle is made.
+const isProductionBuild = import.meta.env.PROD
+
 export const env = {
   escrowAddress: resolveAddress(configuredAddress),
   sepoliaRpcUrl: import.meta.env.VITE_SEPOLIA_RPC_URL?.trim() || undefined,
   walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_ID?.trim() || undefined,
-  enableLocal: import.meta.env.VITE_ENABLE_LOCAL === 'true',
-  enableLab: import.meta.env.VITE_ENABLE_LAB === 'true',
+  enableLocal: !isProductionBuild && import.meta.env.VITE_ENABLE_LOCAL === 'true',
+  enableLab: !isProductionBuild && import.meta.env.VITE_ENABLE_LAB === 'true',
 } as const

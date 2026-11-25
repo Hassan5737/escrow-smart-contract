@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { getAddress, isAddress, type Address } from 'viem'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useAccount } from 'wagmi'
+import { sepolia } from 'wagmi/chains'
 import { ActionPanel } from '../components/ActionPanel'
 import { AddressField } from '../components/AddressField'
 import { EscrowSummary } from '../components/EscrowSummary'
@@ -82,6 +83,31 @@ export function HomePage() {
             Create a vault
           </Link>
           <span className="read-note">Deploy a fresh escrow from your wallet.</span>
+        </div>
+
+        <div className="onboarding">
+          <p className="detail-label">Three keys, one vault</p>
+          <ul className="onboarding-list">
+            <li>
+              <strong>Buyer</strong> approves the deal and can raise a dispute.
+            </li>
+            <li>
+              <strong>Seller</strong> approves the deal and receives the funds.
+            </li>
+            <li>
+              <strong>Arbiter</strong> decides a dispute that has been raised.
+            </li>
+          </ul>
+          {targetChain.id === sepolia.id && (
+            <a
+              className="onboarding-faucet"
+              href="https://faucets.chain.link/sepolia"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Get Sepolia ETH ↗
+            </a>
+          )}
         </div>
 
         <AddressField address={address} onSubmit={selectAddress} />

@@ -1335,6 +1335,44 @@ main {
   margin-top: 18px;
 }
 
+.onboarding {
+  margin-top: 28px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  background: rgba(212, 173, 106, 0.03);
+}
+
+.onboarding-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.onboarding-list li {
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.onboarding-list strong {
+  color: var(--sage);
+  font-weight: 500;
+}
+
+.onboarding-faucet {
+  display: inline-block;
+  margin-top: 14px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--brass);
+  color: var(--brass);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.onboarding-faucet:hover {
+  color: var(--ink);
+}
+
 /* Responsive */
 
 @media (max-width: 860px) {
