@@ -3,8 +3,8 @@ import type { EscrowStatus } from '../types'
 
 interface StatusLineProps {
   status: EscrowStatus
-  explorerHref?: string
-  preview?: boolean
+  explorerHref?: string | undefined
+  preview?: boolean | undefined
 }
 
 export function StatusLine({ status, explorerHref, preview = false }: StatusLineProps) {
@@ -17,7 +17,11 @@ export function StatusLine({ status, explorerHref, preview = false }: StatusLine
         <p className="status-title">{status.title}</p>
         <p className="status-detail">{status.detail}</p>
         {showLink &&
-          (explorerHref && !preview ? (
+          (preview ? (
+            <span className="status-link status-link--preview" aria-disabled="true">
+              View internal transactions · preview
+            </span>
+          ) : explorerHref ? (
             <a
               className="status-link"
               href={explorerHref}
@@ -28,9 +32,7 @@ export function StatusLine({ status, explorerHref, preview = false }: StatusLine
               <span aria-hidden="true"> ↗</span>
             </a>
           ) : (
-            <span className="status-link status-link--preview" aria-disabled="true">
-              View internal transactions · preview
-            </span>
+            <span className="status-detail">No explorer is available on this network.</span>
           ))}
       </div>
     </div>

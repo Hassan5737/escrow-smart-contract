@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { StatusLine } from '../components/StatusLine'
 import { VaultGlyph } from '../components/VaultGlyph'
-import { deriveStatus } from '../lib/status'
+import { deriveStatus, isSettled } from '../lib/status'
 import type { EscrowSnapshot } from '../types'
 
 interface Scenario {
@@ -53,8 +53,6 @@ export function LabPage() {
       <div className="lab-list">
         {scenarios.map((scenarioItem, index) => {
           const status = deriveStatus(scenarioItem.snapshot)
-          const settled =
-            scenarioItem.snapshot.amount > 0n && scenarioItem.snapshot.balance === 0n
 
           return (
             <motion.article
@@ -78,7 +76,7 @@ export function LabPage() {
                   buyerApproved={scenarioItem.snapshot.buyerApproved}
                   sellerApproved={scenarioItem.snapshot.sellerApproved}
                   disputed={scenarioItem.snapshot.isDisputeRaised}
-                  settled={settled}
+                  settled={isSettled(scenarioItem.snapshot)}
                 />
               </div>
             </motion.article>

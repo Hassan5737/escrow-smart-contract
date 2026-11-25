@@ -6,7 +6,7 @@ import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 import { config, queryClient } from './config/wagmi'
 import { env } from './config/env'
-import { HomePlaceholder } from './components/HomePlaceholder'
+import { HomePage } from './pages/HomePage'
 import { LabPage } from './pages/LabPage'
 
 export default function App() {
@@ -19,9 +19,9 @@ export default function App() {
             <NetworkGuard />
             <main>
               <Routes>
-                <Route path="/" element={<HomePlaceholder />} />
+                <Route path="/" element={<HomePage />} />
                 {env.enableLab && <Route path="/lab" element={<LabPage />} />}
-                <Route path="*" element={<HomePlaceholder />} />
+                <Route path="*" element={<HomePage />} />
               </Routes>
             </main>
             <SiteFooter />

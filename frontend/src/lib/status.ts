@@ -1,7 +1,11 @@
 import type { EscrowSnapshot, EscrowStatus } from '../types'
 
+export function isSettled(snapshot: EscrowSnapshot): boolean {
+  return snapshot.amount > 0n && snapshot.balance === 0n
+}
+
 export function deriveStatus(snapshot: EscrowSnapshot): EscrowStatus {
-  const settled = snapshot.amount > 0n && snapshot.balance === 0n
+  const settled = isSettled(snapshot)
   const bothApproved = snapshot.buyerApproved && snapshot.sellerApproved
 
   if (settled && !bothApproved) {
